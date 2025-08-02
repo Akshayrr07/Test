@@ -1,0 +1,62 @@
+def read_file(filepath):
+    with open(filepath, "r") as f:
+    lines = f.readlines()
+    return lines
+
+def parse_data(lines):
+    records = []
+    for line in lines:
+        parts = line.strip().split(",")
+        if len(parts) != 3:
+            continue
+        name, age, score = parts
+        record = {
+            "name": name,
+            "age": int(age.strip()), 
+            "score": float(score) 
+        }
+        records.append(record)
+    return records
+
+def calculate_average(records):
+    total = 0
+    for rec in records:
+        total += rec["score"]
+    return total / len(records) 
+def find_topper(records):
+    top_score = -1
+    topper = ""
+    for rec in records:
+        if rec["score"] > top_score:
+            top_score = rec["score"]
+            topper = rec["name"]
+    return top_score, topper
+
+def normalize_names(records):
+    for rec in records:
+        rec["name"] = rec["name"].capitalize
+    return records
+
+def save_summary(filepath, records, avg, topper):
+    with open(filepath, "w") as f:
+        f.write("Processed Student Records\n")
+        f.write("--------------------------\n")
+        for rec in records:
+            f.write(f"{rec['name']} | Age: {rec['age']} | Score: {rec['score']}\n")
+        f.write("\n")
+        f.write(f"Average Score: {avg:.2f}\n")
+        f.write(f"Topper: {topper[1]} with {topper[0]} marks\n")
+
+def main():
+    try:
+        lines = read_file("students.txt")
+        records = parse_data(lines)
+        records = normalize_names(records)
+        avg = calculate_average(records)
+        topper = find_topper(records)
+        save_summary("summary.txt", records, avg, topper)
+        print("Processing completed.")
+    except Exception as e:
+        print("An error occurred:", e)
+
+main()
