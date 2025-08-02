@@ -13,14 +13,14 @@ public class BuggedSurvey {
         int n = sc.nextInt();
 
         Response[] responses = new Response[100];
-        for (int i = 0; i <= n; i++) { // ❌ Off-by-one error
+        for (int i = 0; i <= n; i++) { 
             responses[i] = new Response();
             System.out.println("Enter name, age, rating (1-5): ");
             responses[i].name = sc.next(); 
             responses[i].age = sc.nextInt();
             responses[i].rating = sc.nextInt();
 
-            if (responses[i].rating < 1 && responses[i].rating > 5) { // ❌ Invalid condition
+            if (responses[i].rating < 1 && responses[i].rating > 5) { 
                 System.out.println("Invalid rating. Setting to 3.");
                 responses[i].rating = 3;
             }
@@ -38,8 +38,8 @@ public class BuggedSurvey {
             }
         }
 
-        System.out.println("\nAverage Rating: " + total / n); // ❌ Integer division
-        System.out.println("Best Reviewer: " + bestUser + " (" + maxRating + " stars)"); // ❌ May throw error if bestUser uninitialized
+        System.out.println("\nAverage Rating: " + total / n); 
+        System.out.println("Best Reviewer: " + bestUser + " (" + maxRating + " stars)"); 
         sc.close();
     }
 }
